@@ -1,7 +1,7 @@
-package abu.epam.com.workloadservice.service;
+package abu.epam.com.workloadservice.domain.service;
 
-import abu.epam.com.workloadservice.dto.WorkloadRequest;
-import abu.epam.com.workloadservice.model.TrainerWorkload;
+import abu.epam.com.workloadservice.domain.dto.WorkloadRequest;
+import abu.epam.com.workloadservice.domain.model.TrainerWorkload;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,6 @@ public class WorkloadService {
                         .build()
         );
 
-        // Update trainer info
         workload.setFirstName(request.getFirstName());
         workload.setLastName(request.getLastName());
         workload.setIsActive(request.getIsActive());

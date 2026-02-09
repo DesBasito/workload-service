@@ -1,4 +1,4 @@
-package abu.epam.com.workloadservice.model;
+package abu.epam.com.workloadservice.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

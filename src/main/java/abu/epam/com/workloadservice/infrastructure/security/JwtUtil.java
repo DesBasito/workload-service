@@ -1,8 +1,8 @@
-package abu.epam.com.workloadservice.security;
+package abu.epam.com.workloadservice.infrastructure.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,10 +34,21 @@ public class JwtUtil {
 
     public boolean validateToken(String token) {
         try {
-            extractAllClaims(token);
+            Claims claims = extractAllClaims(token);
+            log.info("JWT token validated successfully. Subject: {}, Expiration: {}",
+                    claims.getSubject(), claims.getExpiration());
             return true;
+        } catch (ExpiredJwtException e) {
+            log.error("JWT token expired: {}", e.getMessage());
+            return false;
+        } catch (SignatureException e) {
+            log.error("JWT signature validation failed: {}", e.getMessage());
+            return false;
+        } catch (MalformedJwtException e) {
+            log.error("JWT token is malformed: {}", e.getMessage());
+            return false;
         } catch (Exception e) {
-            log.error("Invalid JWT token: {}", e.getMessage());
+            log.error("Invalid JWT token: {} ({})", e.getMessage(), e.getClass().getSimpleName());
             return false;
         }
     }

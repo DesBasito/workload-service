@@ -1,4 +1,4 @@
-package abu.epam.com.workloadservice.filter;
+package abu.epam.com.workloadservice.infrastructure.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,8 +25,6 @@ public class TransactionLoggingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-
-        // Generate unique transaction ID
         String transactionId = UUID.randomUUID().toString();
         MDC.put(TRANSACTION_ID, transactionId);
 
@@ -36,7 +34,7 @@ public class TransactionLoggingFilter extends OncePerRequestFilter {
         long startTime = System.currentTimeMillis();
 
         try {
-            // Transaction level logging - request received
+            // request received
             log.info("[TRANSACTION] START - Method: {}, URI: {}, TransactionID: {}",
                     request.getMethod(), request.getRequestURI(), transactionId);
 
@@ -48,6 +46,7 @@ public class TransactionLoggingFilter extends OncePerRequestFilter {
             long duration = System.currentTimeMillis() - startTime;
 
             // Transaction level logging - response sent
+
             log.info("[TRANSACTION] END - Status: {}, Duration: {}ms, TransactionID: {}",
                     response.getStatus(), duration, transactionId);
 

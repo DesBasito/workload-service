@@ -1,4 +1,4 @@
-package abu.epam.com.workloadservice.model;
+package abu.epam.com.workloadservice.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class TrainerMonthlySummary {
     private int totalDuration = 0;
 
     public void addDuration(int duration) {
-        this.totalDuration += duration;
+        this.totalDuration = Math.max(0, this.totalDuration + duration);
     }
 
     public void removeDuration(int duration) {

@@ -1,8 +1,8 @@
-package abu.epam.com.workloadservice.controller;
+package abu.epam.com.workloadservice.infrastructure.controller;
 
-import abu.epam.com.workloadservice.dto.WorkloadRequest;
-import abu.epam.com.workloadservice.model.TrainerWorkload;
-import abu.epam.com.workloadservice.service.WorkloadService;
+import abu.epam.com.workloadservice.domain.dto.WorkloadRequest;
+import abu.epam.com.workloadservice.domain.model.TrainerWorkload;
+import abu.epam.com.workloadservice.domain.service.WorkloadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,10 +29,8 @@ public class WorkloadController {
 
     private final WorkloadService workloadService;
 
-    @Operation(
-            summary = "Update trainer workload",
-            description = "Add or delete training session for a trainer. This endpoint is called by Gym CRM System when trainings are created or deleted."
-    )
+    @Operation(summary = "Update trainer workload",
+            description = "Add or delete training session for a trainer. This endpoint is called by Gym CRM System when trainings are created or deleted.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Workload updated successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid request data", content = @Content),
@@ -48,16 +45,12 @@ public class WorkloadController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(
-            summary = "Get trainer workload",
-            description = "Retrieve workload data for a specific trainer by username"
-    )
+    @Operation(summary = "Get trainer workload",
+            description = "Retrieve workload data for a specific trainer by username")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
+            @ApiResponse(responseCode = "200",
                     description = "Trainer workload retrieved successfully",
-                    content = @Content(schema = @Schema(implementation = TrainerWorkload.class))
-            ),
+                    content = @Content(schema = @Schema(implementation = TrainerWorkload.class))),
             @ApiResponse(responseCode = "404", description = "Trainer not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing JWT token", content = @Content)
     })
@@ -75,15 +68,10 @@ public class WorkloadController {
         return ResponseEntity.ok(workload);
     }
 
-    @Operation(
-            summary = "Get all trainers workload",
-            description = "Retrieve workload data for all trainers in the system"
-    )
+    @Operation(summary = "Get all trainers workload",
+            description = "Retrieve workload data for all trainers in the system")
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "All trainers workload retrieved successfully"
-            ),
+            @ApiResponse(responseCode = "200", description = "All trainers workload retrieved successfully"),
             @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing JWT token", content = @Content)
     })
     @GetMapping

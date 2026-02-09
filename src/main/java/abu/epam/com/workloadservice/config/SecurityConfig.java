@@ -1,6 +1,6 @@
 package abu.epam.com.workloadservice.config;
 
-import abu.epam.com.workloadservice.security.JwtAuthenticationFilter;
+import abu.epam.com.workloadservice.infrastructure.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
